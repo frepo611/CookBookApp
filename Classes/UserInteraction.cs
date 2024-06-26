@@ -1,4 +1,6 @@
 namespace CookBookApp.Classes;
+
+using System.Runtime.CompilerServices;
 using CookBookApp.Ingredients;
 using CookBookApp.Recipes;
 public interface IRecipesUI
@@ -11,7 +13,7 @@ public interface IRecipesUI
 }
 public class RecipesConsoleUI : IRecipesUI
 {
-    private readonly IngredientsRegistry _allIngredients = new IngredientsRegistry();
+    // private readonly IngredientsRegistry; _allIngredients = new IngredientsRegistry();
     public void Exit()
     {
         ShowMessage("Press any key to quit");
@@ -20,7 +22,7 @@ public class RecipesConsoleUI : IRecipesUI
     public void PromptToCreateRecipe()
     {
         Console.WriteLine($"Create a new cookie recipe! Available ingredients are:");
-        foreach (var ingredient in _allIngredients.All)
+        foreach (var ingredient in IngredientsRegistry.All)
         {
             Console.WriteLine($"{ingredient}");
         }
@@ -34,12 +36,9 @@ public class RecipesConsoleUI : IRecipesUI
             string input = Console.ReadLine();
             if (int.TryParse(input, out int id))
                 {
-                    foreach (var ingredient in _allIngredients.All)
+                    if (IngredientsRegistry.GetIngredient(id) is not null)
                     {
-                        if (ingredient.Id == id)
-                        {
-                            result.Add(ingredient);
-                        }
+                        result.Add(IngredientsRegistry.GetIngredient(id));
                     }
                 }
             else break;
