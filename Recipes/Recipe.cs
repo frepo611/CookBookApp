@@ -16,4 +16,15 @@ public class Recipe
         }
         return string.Join(Environment.NewLine, result.ToArray());
     }
+    public string RecipeToText()
+    {
+        var ingredientIDs = new List<int>();
+
+        foreach (var ingredient in Ingredients)
+        {
+            ingredientIDs.Add(ingredient.Id);
+        }
+    return string.Join(',', ingredientIDs);
+    }
+
 }
